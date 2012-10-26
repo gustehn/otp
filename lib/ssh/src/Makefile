@@ -71,6 +71,7 @@ MODULES= \
 	ssh_sftpd_file\
 	ssh_transport \
 	ssh_userreg \
+	ssh_register \
 	ssh_xfer
 
 PUBLIC_HRL_FILES= ssh.hrl ssh_userauth.hrl ssh_xfer.hrl
