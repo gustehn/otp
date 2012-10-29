@@ -19,11 +19,11 @@
 %% @doc
 %% Starts the server
 %%
-%% @spec
+%% @spec start(ConnRef) -> {ok, RegRef}
 %% @end
 %%--------------------------------------------------------------------
-start(Pid) ->
-    gen_server:start(?MODULE, [Pid], []).
+start(ConnRef) ->
+    gen_server:start(?MODULE, [ConnRef], []).
 
 %%%===================================================================
 %%% gen_server callbacks
@@ -36,14 +36,33 @@ start(Pid) ->
 %% @spec
 %% @end
 %%--------------------------------------------------------------------
-init([Pid]) ->
+init([ConnRef]) ->
     process_flag(trap_exit, true),
-    {ok, {Pid,[]}}.
+    {ok, {ConnRef,[]}}.
 
+%%--------------------------------------------------------------------
+%% @doc
+%% The function to call when you want to register yourself at a 
+%% registration reference
+%%
+%% @spec reg(Reg) -> ok
+%% @end
+%%--------------------------------------------------------------------
 reg(Reg) ->
     gen_server:call(Reg, {reg, self()}).
+
+%%--------------------------------------------------------------------
+%% @doc
+%% The function to call when you want to unregister yourself at a 
+%% registration reference
+%%
+%% @spec 
+%% @end
+%%--------------------------------------------------------------------
+
 unreg(Reg) ->
     gen_server:call(Reg, {unreg, self()}).
+
 %%--------------------------------------------------------------------
 %% @doc
 %% Handling call messages
@@ -72,7 +91,9 @@ handle_call({unreg, Pid}, _From, {Conn, Pids}) ->
     case NewPids of
 	[] ->
 	    exit(Conn, normal),
-	    exit(normal);
+	    ToExit = self(),
+	    spawn(fun() -> wait_and_exit(ToExit) end),
+	    {reply, ok, {Conn, NewPids}};
 	_ ->
 	    {reply, ok, {Conn, NewPids}}
     end;
@@ -141,3 +162,9 @@ code_change(_OldVsn, State, _Extra) ->
 %%%===================================================================
 %%% Internal functions
 %%%===================================================================
+
+wait_and_exit(Reg) -> 
+    receive
+    after 2000 ->
+	    exit(Reg, normal)
+    end.
