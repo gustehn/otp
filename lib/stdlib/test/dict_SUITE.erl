@@ -25,7 +25,7 @@
 -export([all/0, suite/0,groups/0,init_per_suite/1, end_per_suite/1, 
 	 init_per_group/2,end_per_group/2,
 	 init_per_testcase/2,end_per_testcase/2,
-	 create/1,store/1]).
+	 create/1,store/1, prepend_dict/1]).
 
 -include_lib("test_server/include/test_server.hrl").
 
@@ -34,7 +34,7 @@
 suite() -> [{ct_hooks,[ts_install_cth]}].
 
 all() -> 
-    [create, store].
+    [create, store, prepend_dict].
 
 groups() -> 
     [].
@@ -60,6 +60,12 @@ end_per_testcase(_Case, Config) ->
     Dog = ?config(watchdog, Config),
     test_server:timetrap_cancel(Dog),
     ok.
+
+prepend_dict(Config) when is_list(Config) ->
+    A = dict:new(),
+    B = dict:store(test, test1, A),
+    C = dict:prepend(test, test2, B),
+    [test2, test1] = dict:fetch(test, C).
 
 create(Config) when is_list(Config) ->
     test_all(fun create_1/1).

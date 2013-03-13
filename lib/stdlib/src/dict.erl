@@ -39,7 +39,7 @@
 %% Standard interface.
 -export([new/0,is_key/2,to_list/1,from_list/1,size/1]).
 -export([fetch/2,find/2,fetch_keys/1,erase/2]).
--export([store/3,append/3,append_list/3,update/3,update/4,update_counter/3]).
+-export([store/3,append/3,append_list/3,update/3,update/4,update_counter/3, prepend/3]).
 -export([fold/3,map/2,filter/2,merge/3]).
 
 %% Low-level interface.
@@ -188,6 +188,30 @@ store_bkt_val(Key, New, [Other|Bkt0]) ->
     {Bkt1,Ic} = store_bkt_val(Key, New, Bkt0),
     {[Other|Bkt1],Ic};
 store_bkt_val(Key, New, []) -> {[?kv(Key,New)],1}.
+
+-spec prepend(Key, Value, Dict1) -> Dict2 when
+      Key :: term(),
+      Value :: term(),
+      Dict1 :: dict(),
+      Dict2 :: dict().
+
+prepend(Key, Val, D0) ->
+    Slot = get_slot(D0, Key),
+    {D1,Ic} = on_bucket(fun (B0) -> prepend_bkt(Key, Val, B0) end,
+			D0, Slot),
+    maybe_expand(D1, Ic).
+
+prepend_bkt(Key, Val, [?kv(Key,Bag)|Bkt]) -> 
+    case is_list(Bag) of
+	true ->
+	    {[?kv(Key,[Val|Bag])|Bkt],0};
+	_ ->
+	    {[?kv(Key,[Val] ++ [Bag])|Bkt],0}
+    end;
+prepend_bkt(Key, Val, [Other|Bkt0]) ->
+    {Bkt1,Ic} = prepend_bkt(Key, Val, Bkt0),
+    {[Other|Bkt1],Ic};
+prepend_bkt(Key, Val, []) -> {[?kv(Key,[Val])],1}.
 
 -spec append(Key, Value, Dict1) -> Dict2 when
       Key :: term(),
