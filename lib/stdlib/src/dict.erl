@@ -39,7 +39,7 @@
 %% Standard interface.
 -export([new/0,is_key/2,to_list/1,from_list/1,size/1]).
 -export([fetch/2,find/2,fetch_keys/1,erase/2]).
--export([store/3,append/3,append_list/3,update/3,update/4,update_counter/3, prepend/3]).
+-export([store/3,append/3,append_list/3,update/3,update/4,update_counter/3, prepend/3, fetch_elements/1]).
 -export([fold/3,map/2,filter/2,merge/3]).
 
 %% Low-level interface.
@@ -150,6 +150,13 @@ find_val(_, []) -> error.
 
 fetch_keys(D) ->
     fold(fun (Key, _Val, Keys) -> [Key|Keys] end, [], D).
+
+-spec fetch_elements(Dict) -> Elements when
+      Dict :: dict(),
+      Elements :: [term()].
+
+fetch_elements(D) ->
+    fold(fun (_Key, Val, Vals) -> [Val|Vals] end, [], D).
 
 -spec erase(Key, Dict1) -> Dict2 when
       Key :: term(),

@@ -98,6 +98,13 @@
       </desc>
     </func>
     <func>
+      <name name="fetch_elements" arity="1"/>
+      <fsummary>Return all elements in a dictionary</fsummary>
+      <desc>
+        <p>This function returns a list of all elements in the dictionary.</p>
+      </desc>
+    </func>
+    <func>
       <name name="filter" arity="2"/>
       <fsummary>Choose elements which satisfy a predicate</fsummary>
       <desc>
