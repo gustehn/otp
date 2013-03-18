@@ -22,7 +22,7 @@
 %% Standard interface.
 -export([new/0,is_key/2,to_list/1,from_list/1,size/1]).
 -export([fetch/2,find/2,fetch_keys/1,erase/2]).
--export([store/3,append/3,append_list/3,update/3,update/4,update_counter/3]).
+-export([store/3,append/3,append_list/3,update/3,update/4,update_counter/3, prepend/3]).
 -export([fold/3,map/2,filter/2,merge/3]).
 
 -export_type([orddict/0]).
@@ -128,6 +128,25 @@ append(Key, New, [{K,_}=E|Dict]) when Key > K ->
 append(Key, New, [{_K,Old}|Dict]) ->		%Key == K
     [{Key,Old ++ [New]}|Dict];
 append(Key, New, []) -> [{Key,[New]}].
+
+-spec prepend(Key, Value, Orddict1) -> Orddict2 when
+      Key :: term(),
+      Value :: term(),
+      Orddict1 :: orddict(),
+      Orddict2 :: orddict().
+
+prepend(Key, New, [{K,_}=E|Dict]) when Key < K ->
+    [{Key,[New]},E|Dict];
+prepend(Key, New, [{K,_}=E|Dict]) when Key > K ->
+    [E|prepend(Key, New, Dict)];
+prepend(Key, New, [{_K,Old}|Dict]) ->		%Key == K
+    case is_list(Old) of
+	true ->
+	    [{Key,[New|Old]}|Dict];
+	_ ->
+	    [{Key,[New] ++ [Old]}|Dict]
+    end;
+prepend(Key, New, []) -> [{Key,[New]}].
 
 -spec append_list(Key, ValList, Orddict1) -> Orddict2 when
       Key :: term(),
