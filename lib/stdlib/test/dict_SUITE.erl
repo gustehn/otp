@@ -62,16 +62,26 @@ end_per_testcase(_Case, Config) ->
     ok.
 
 prepend_dict(Config) when is_list(Config) ->
-    A = dict:new(),
-    B = dict:store(test, test1, A),
-    C = dict:prepend(test, test2, B),
-    [test2, test1] = dict:fetch(test, C).
+    D1 = dict:new(),
+    D2 = dict:store(test, test1, D1),
+    D3 = dict:prepend(test, test2, D2),
+    [test2, test1] = dict:fetch(test, D3),
+    %%Now let's test orddict
+    Od1 = orddict:new(),
+    Od2 = orddict:store(test, test1, Od1),
+    Od3 = orddict:prepend(test, test2, Od2),
+    [test2, test1] = orddict:fetch(test, Od3).
 
 fetch_elements(Config) when is_list(Config) ->
-    A = dict:new(),
-    B = dict:store(test, testvalue1, A),
-    C = dict:store(test2, testvalue2, B),
-    [testvalue2, testvalue1] = dict:fetch_elements(C).
+    D1 = dict:new(),
+    D2 = dict:store(test, testvalue1, D1),
+    D3 = dict:store(test2, testvalue2, D2),
+    [testvalue2, testvalue1] = dict:fetch_elements(D3),
+    %%Now let's test orddict
+    Od1 = orddict:new(),
+    Od2 = orddict:store(test, testvalue1, Od1),
+    Od3 = orddict:store(test2, testvalue2, Od2),
+    [testvalue1, testvalue2] = orddict:fetch_elements(Od3).
 
 create(Config) when is_list(Config) ->
     test_all(fun create_1/1).

@@ -23,7 +23,7 @@
 -export([new/0,is_key/2,to_list/1,from_list/1,size/1]).
 -export([fetch/2,find/2,fetch_keys/1,erase/2]).
 -export([store/3,append/3,append_list/3,update/3,update/4,update_counter/3, prepend/3]).
--export([fold/3,map/2,filter/2,merge/3]).
+-export([fold/3,map/2,filter/2,merge/3, fetch_elements/1]).
 
 -export_type([orddict/0]).
 
@@ -89,6 +89,14 @@ find(_, []) -> error.
 fetch_keys([{Key,_}|Dict]) ->
     [Key|fetch_keys(Dict)];
 fetch_keys([]) -> [].
+
+-spec fetch_elements(Orddict) -> Values when
+      Orddict :: orddict(),
+      Values :: [term()].
+
+fetch_elements([{_Key,Value}|Dict]) ->
+    [Value|fetch_elements(Dict)];
+fetch_elements([]) -> [].
 
 -spec erase(Key, Orddict1) -> Orddict2 when
       Key :: term(),
