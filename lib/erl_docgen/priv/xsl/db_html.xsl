@@ -116,7 +116,7 @@
 	    <!-- Avoid duplicated anchors. See also menu.funcs. -->
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <a name="{$name}-{$arity}"></a>
+	    <a class="no-link-display" name="{$name}-{$arity}"></a>
 	  </xsl:otherwise>
         </xsl:choose>
 
@@ -135,10 +135,12 @@
     <xsl:param name="local_types"/>
     <xsl:param name="global_types"/>
     <span class="bold_code">
-      <xsl:apply-templates mode="local_type">
-        <xsl:with-param name="local_types" select="$local_types"/>
-        <xsl:with-param name="global_types" select="$global_types"/>
-      </xsl:apply-templates>
+      <b>
+	<xsl:apply-templates mode="local_type">
+	  <xsl:with-param name="local_types" select="$local_types"/>
+	  <xsl:with-param name="global_types" select="$global_types"/>
+	</xsl:apply-templates>
+      </b>
     </span>
     <br/>
   </xsl:template>
@@ -263,10 +265,12 @@
       <xsl:variable name="tname" select="typename"/>
       <div class="REFTYPES">
 	<span class="bold_code">
-	  <xsl:apply-templates select="string" mode="local_type">
-	    <xsl:with-param name="local_types" select="$local_types"/>
-	    <xsl:with-param name="global_types" select="$global_types"/>
-	  </xsl:apply-templates>
+	  <b>
+	    <xsl:apply-templates select="string" mode="local_type">
+	      <xsl:with-param name="local_types" select="$local_types"/>
+	      <xsl:with-param name="global_types" select="$global_types"/>
+	    </xsl:apply-templates>
+	  </b>
 	</span>
       </div>
       <xsl:apply-templates select="$type_desc[@variable = $tname]"/>
@@ -310,9 +314,11 @@
     <xsl:for-each select= "$i//type">
       <pre>
 	<span class="bold_code">
-	  <xsl:apply-templates select="typedecl"/>
-	</span><xsl:text>
-</xsl:text>
+	  <b>
+	    <xsl:apply-templates select="typedecl"/>
+	  </b>
+	  </span><xsl:text>
+	</xsl:text>
       </pre>
     </xsl:for-each>
   </xsl:template>
@@ -383,7 +389,9 @@
       </xsl:when>
       <xsl:otherwise> <!-- <datatype> with <name> -->
 	<span class="bold_code">
-          <xsl:apply-templates/>
+	  <b>
+	    <xsl:apply-templates/>
+	  </b>
 	</span>
       </xsl:otherwise>
     </xsl:choose>
@@ -391,19 +399,23 @@
 
   <xsl:template match="typehead">
     <span class="bold_code">
-      <xsl:apply-templates/>
-    </span><br/>
+      <b>
+	<xsl:apply-templates/>
+      </b>
+      </span><br/>
   </xsl:template>
 
   <xsl:template match="typehead" mode="local_type">
     <xsl:param name="local_types"/>
     <xsl:param name="global_types"/>
     <span class="bold_code">
-    <xsl:apply-templates mode="local_type">
-      <xsl:with-param name="local_types" select="$local_types"/>
-      <xsl:with-param name="global_types" select="$global_types"/>
-    </xsl:apply-templates>
-    </span><br/>
+      <b>
+	<xsl:apply-templates mode="local_type">
+	  <xsl:with-param name="local_types" select="$local_types"/>
+	  <xsl:with-param name="global_types" select="$global_types"/>
+	</xsl:apply-templates>
+      </b>
+      </span><br/>
   </xsl:template>
 
   <!-- Not used right now -->
@@ -419,7 +431,9 @@
   <xsl:template match="local_def">
     <div class="REFTYPES">
       <span class="bold_code">
-        <xsl:apply-templates/>
+	<b>
+	  <xsl:apply-templates/>
+	</b>
       </span>
     </div>
   </xsl:template>
@@ -583,7 +597,7 @@
             <link rel="stylesheet" href="{$topdocdir}/{$stylesheet}" type="text/css"/>
           </xsl:when>
           <xsl:otherwise>
-            <link rel="stylesheet" href="{$topdocdir}/otp_doc.css" type="text/css"/>
+	    <link rel="stylesheet" href="{$topdocdir}/bootstrap.css" type="text/css"/>
           </xsl:otherwise>
         </xsl:choose>
         <xsl:choose>
@@ -597,7 +611,7 @@
       </head>
       <body bgcolor="white" text="#000000" link="#0000ff" vlink="#ff00ff" alink="#ff0000">
 
-        <div id="container">
+        <div class="container">
           <script id="js" type="text/javascript" language="JavaScript" src="{$topdocdir}/js/flipmenu/flipmenu.js"/>
           <script id="js2" type="text/javascript" src="{$topdocdir}/js/erlresolvelinks.js"></script>
           <script language="JavaScript" type="text/javascript">
@@ -619,11 +633,6 @@
                 return myHeight;
               }
 
-              function setscrollpos() {
-                var objf=document.getElementById('loadscrollpos');
-                 document.getElementById("leftnav").scrollTop = objf.offsetTop - getWinHeight()/2;
-              }
-
               function addEvent(obj, evType, fn){
                 if (obj.addEventListener){
                 obj.addEventListener(evType, fn, true);
@@ -636,8 +645,6 @@
               }
              }
 
-             addEvent(window, 'load', setscrollpos);
-
              //-->]]></xsl:text>
           </script>
           <!-- Generate menu -->
@@ -646,7 +653,7 @@
             <xsl:with-param name="curModule" select="$curModule"/>
           </xsl:call-template>
 
-          <div id="content">
+          <div id="content" class="col-lg-9">
             <div class="innertube">
 
               <!-- Insert the node-specific content -->
@@ -657,14 +664,16 @@
 
             <div class="footer">
               <hr/>
-              <p>
-                <xsl:value-of select="$copyright"/>
-                <xsl:value-of select="/book/header/copyright/year[1]"/>
-                <xsl:text>-</xsl:text>
-                <xsl:value-of select="substring-after(normalize-space(substring-after($gendate, ' ')), ' ')"/>
-                <xsl:text> </xsl:text>
-                <xsl:value-of select="/book/header/copyright/holder"/>
-              </p>
+	      <center>
+		<small>
+		  <xsl:value-of select="$copyright"/>
+		  <xsl:value-of select="/book/header/copyright/year[1]"/>
+		  <xsl:text>-</xsl:text>
+		  <xsl:value-of select="substring-after(normalize-space(substring-after($gendate, ' ')), ' ')"/>
+		  <xsl:text> </xsl:text>
+		  <xsl:value-of select="/book/header/copyright/holder"/>
+		</small>
+	      </center>
             </div>
 
           </div>
@@ -741,16 +750,17 @@
         <img alt="Erlang logo" src="{$topdocdir}/erlang-logo.png"/>
       </xsl:otherwise>
     </xsl:choose>
-    <br/>
+    <br />
+    <br />
     <small>
       <xsl:if test="boolean(/book/parts/part)">
-        <a href="users_guide.html">User's Guide</a><br/>
+	<a href="users_guide.html">User's Guide</a><br/>
       </xsl:if>
       <xsl:if test="boolean(/book/applications)">
-        <a href="index.html">Reference Manual</a><br/>
+	<a href="index.html">Reference Manual</a><br/>
       </xsl:if>
       <xsl:if test="boolean(/book/releasenotes)">
-        <a href="release_notes.html">Release Notes</a><br/>
+	<a href="release_notes.html">Release Notes</a><br/>
       </xsl:if>
       <xsl:choose>
 	<xsl:when test="string-length($pdfname) > 0">
@@ -819,7 +829,7 @@
   <xsl:template match="chapter/section">
     <xsl:param name="chapnum"/>
     <h3>
-      <a name="{generate-id(title)}">
+      <a class="no-link-display" name="{generate-id(title)}">
         <xsl:value-of select="$chapnum"/>.<xsl:number/>&#160;
         <xsl:value-of select="title"/>
       </a>
@@ -847,7 +857,7 @@
   <xsl:template match="erlref/section|cref/section|comref/section|fileref/section|appref/section">
     <xsl:param name="chapnum"/>
     <h3>
-      <a name="{generate-id(title)}">
+      <a class="no-link-display" name="{generate-id(title)}">
         <xsl:value-of select="title"/>
       </a>
     </h3>
@@ -1111,7 +1121,7 @@
   <xsl:template name="menu.ug">
     <xsl:param name="chapnum"/>
 
-    <div id="leftnav">
+    <div id="leftnav" class="col-lg-3">
       <div class="innertube">
 
         <xsl:call-template name="menu_top"/>
@@ -1275,7 +1285,7 @@
   <!-- Menu.ref -->
   <xsl:template name="menu.ref">
     <xsl:param name="curModule"/>
-    <div id="leftnav">
+    <div id="leftnav" class="col-lg-3">
       <div class="innertube">
 
         <xsl:call-template name="menu_top"/>
@@ -1641,6 +1651,7 @@
   <xsl:template match="module">
     <xsl:param name="partnum"/>
     <h3>MODULE</h3>
+    <div class="divider"><p></p></div>
     <div class="REFBODY">
       <xsl:apply-templates>
         <xsl:with-param name="partnum" select="$partnum"/>
@@ -1653,6 +1664,7 @@
   <xsl:template match="modulesummary">
     <xsl:param name="partnum"/>
     <h3>MODULE SUMMARY</h3>
+    <div class="divider"><p></p></div>
     <div class="REFBODY">
       <xsl:apply-templates>
         <xsl:with-param name="partnum" select="$partnum"/>
@@ -1664,6 +1676,7 @@
   <xsl:template match="lib">
     <xsl:param name="partnum"/>
     <h3>C LIBRARY</h3>
+    <div class="divider"><p></p></div>
     <div class="REFBODY">
       <xsl:apply-templates>
         <xsl:with-param name="partnum" select="$partnum"/>
@@ -1676,6 +1689,7 @@
   <xsl:template match="libsummary">
     <xsl:param name="partnum"/>
     <h3>LIBRARY SUMMARY</h3>
+    <div class="divider"><p></p></div>
     <div class="REFBODY">
       <xsl:apply-templates>
         <xsl:with-param name="partnum" select="$partnum"/>
@@ -1687,6 +1701,7 @@
   <xsl:template match="com">
     <xsl:param name="partnum"/>
     <h3>COMMAND</h3>
+    <div class="divider"><p></p></div>
     <div class="REFBODY">
       <xsl:apply-templates>
         <xsl:with-param name="partnum" select="$partnum"/>
@@ -1699,6 +1714,7 @@
   <xsl:template match="comsummary">
     <xsl:param name="partnum"/>
     <h3>COMMAND SUMMARY</h3>
+    <div class="divider"><p></p></div>
     <div class="REFBODY">
       <xsl:apply-templates>
         <xsl:with-param name="partnum" select="$partnum"/>
@@ -1710,6 +1726,7 @@
   <xsl:template match="file">
     <xsl:param name="partnum"/>
     <h3>FILE</h3>
+    <div class="divider"><p></p></div>
     <div class="REFBODY">
       <xsl:apply-templates>
         <xsl:with-param name="partnum" select="$partnum"/>
@@ -1722,6 +1739,7 @@
   <xsl:template match="filesummary">
     <xsl:param name="partnum"/>
     <h3>FILE SUMMARY</h3>
+    <div class="divider"><p></p></div>
     <div class="REFBODY">
       <xsl:apply-templates>
         <xsl:with-param name="partnum" select="$partnum"/>
@@ -1734,6 +1752,7 @@
   <xsl:template match="app">
     <xsl:param name="partnum"/>
     <h3>APPLICATION</h3>
+    <div class="divider"><p></p></div>
     <div class="REFBODY">
       <xsl:apply-templates>
         <xsl:with-param name="partnum" select="$partnum"/>
@@ -1746,6 +1765,7 @@
   <xsl:template match="appsummary">
     <xsl:param name="partnum"/>
     <h3>APPLICATION SUMMARY</h3>
+    <div class="divider"><p></p></div>
     <div class="REFBODY">
       <xsl:apply-templates>
         <xsl:with-param name="partnum" select="$partnum"/>
@@ -1757,6 +1777,7 @@
   <xsl:template match="description">
     <xsl:param name="partnum"/>
     <h3>DESCRIPTION</h3>
+    <div class="divider"><p></p></div>
     <div class="REFBODY">
       <p>
         <xsl:apply-templates>
@@ -1773,7 +1794,7 @@
     <h3>
       <xsl:text>EXPORTS</xsl:text>
     </h3>
-
+    <div class="divider"><p></p></div>
     <xsl:apply-templates>
       <xsl:with-param name="partnum" select="$partnum"/>
     </xsl:apply-templates>
@@ -1845,13 +1866,15 @@
 
     <xsl:choose>
       <xsl:when test="ancestor::cref">
-        <a name="{substring-before(nametext, '(')}">
+        <a class="no-link-display" name="{substring-before(nametext, '(')}">
           <span class="bold_code">
+	    <b>
             <xsl:value-of select="ret"/>
             <xsl:call-template name="maybe-space-after-ret">
               <xsl:with-param name="s" select="ret"/>
             </xsl:call-template>
             <xsl:value-of select="nametext"/>
+	    </b>
           </span></a><br/>
       </xsl:when>
       <xsl:when test="ancestor::erlref">
@@ -1871,10 +1894,10 @@
             </xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
-        <a name="{$fname}-{$arity}"><span class="bold_code"><xsl:value-of select="."/></span></a><br/>
+        <a class="no-link-display" name="{$fname}-{$arity}"><span class="bold_code"><b><xsl:value-of select="."/></b></span></a><br/>
       </xsl:when>
       <xsl:otherwise>
-        <span class="bold_code"><xsl:value-of select="."/></span>
+        <span class="bold_code"><b><xsl:value-of select="."/></b></span>
       </xsl:otherwise>
     </xsl:choose>
 
@@ -1916,10 +1939,12 @@
     <xsl:param name="partnum"/>
     <div class="REFTYPES">
       <span class="bold_code">
-        <xsl:apply-templates>
-          <xsl:with-param name="partnum" select="$partnum"/>
-        </xsl:apply-templates>
-      </span><br/>
+	<b>
+	  <xsl:apply-templates>
+	    <xsl:with-param name="partnum" select="$partnum"/>
+	  </xsl:apply-templates>
+	</b>
+	</span><br/>
     </div>
   </xsl:template>
 
@@ -1953,7 +1978,7 @@
 
 
   <xsl:template match="input">
-    <span class="bold_code"><xsl:apply-templates/></span>
+    <span class="bold_code"><b><xsl:apply-templates/></b></span>
   </xsl:template>
 
   <xsl:template match="seealso">
@@ -1972,7 +1997,7 @@
           <xsl:when test="string-length($app_part) > 0">
             <!-- "AppPart:ModPart#Linkpart" -->
             <xsl:variable name="mod_part"><xsl:value-of select="substring-after($filepart, ':')"/></xsl:variable>
-            <span class="bold_code"><a href="javascript:erlhref('{$topdocdir}/../','{$app_part}','{$mod_part}.html#{$linkpart}');"><xsl:apply-templates/></a></span>
+            <span class="bold_code"><b><a href="javascript:erlhref('{$topdocdir}/../','{$app_part}','{$mod_part}.html#{$linkpart}');"><xsl:apply-templates/></a></b></span>
           </xsl:when>
           <xsl:otherwise>
             <!-- "Filepart#Linkpart (there is no ':' in Filepart) -->
@@ -1992,7 +2017,7 @@
                   <xsl:variable name="app" select="key('mod2app', $filepart)"/>
 		  <xsl:choose>
 		    <xsl:when test="string-length($app) > 0">
-		      <span class="bold_code"><a href="javascript:erlhref('{$topdocdir}/../','{$app}','{$filepart}.html#{$linkpart}');"><xsl:value-of select="$this"/></a></span>
+		      <span class="bold_code"><b><a href="javascript:erlhref('{$topdocdir}/../','{$app}','{$filepart}.html#{$linkpart}');"><xsl:value-of select="$this"/></a></b></span>
 		    </xsl:when>
 		    <xsl:otherwise>
 		      <!-- Unknown application -->
@@ -2005,11 +2030,11 @@
               </xsl:when>
               <xsl:when test="string-length($linkpart) > 0">
                 <!-- Still Filepart#Linkpart (there is no ':' in Filepart -->
-                <span class="bold_code"><a href="{$filepart}.html#{$linkpart}"><xsl:apply-templates/></a></span>
+                <span class="bold_code"><b><a href="{$filepart}.html#{$linkpart}"><xsl:apply-templates/></a></b></span>
               </xsl:when>
               <xsl:otherwise>
                 <!-- "Filepart#" (there is no ':' in Filepart -->
-                <span class="bold_code"><a href="{$filepart}.html"><xsl:apply-templates/></a></span>
+                <span class="bold_code"><b><a href="{$filepart}.html"><xsl:apply-templates/></a></b></span>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:otherwise>
@@ -2017,7 +2042,7 @@
       </xsl:when> <!-- string-length($filepart) > 0 -->
       <xsl:when test="string-length($linkpart) > 0">
 	<!-- "#Linkpart" -->
-	<span class="bold_code"><a href="#{$linkpart}"><xsl:apply-templates/></a></span>
+	<span class="bold_code"><b><a href="#{$linkpart}"><xsl:apply-templates/></a></b></span>
       </xsl:when>
       <xsl:otherwise>
 	<!-- "AppPart:Mod" or "Mod" (there is no '#') -->
@@ -2027,11 +2052,11 @@
 	  <xsl:when test="string-length($app_part) > 0">
 	    <!-- "App:Mod" -->
 	    <xsl:variable name="mod_part"><xsl:value-of select="substring-after(@marker, ':')"/></xsl:variable>
-	    <span class="bold_code"><a href="javascript:erlhref('{$topdocdir}/../','{$app_part}','{$mod_part}.html');"><xsl:apply-templates/></a></span>
+	    <span class="bold_code"><b><a href="javascript:erlhref('{$topdocdir}/../','{$app_part}','{$mod_part}.html');"><xsl:apply-templates/></a></b></span>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <!-- "Mod" -->
-	    <span class="bold_code"><a href="{@marker}.html"><xsl:apply-templates/></a></span>
+	    <span class="bold_code"><b><a href="{@marker}.html"><xsl:apply-templates/></a></b></span>
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:otherwise>
@@ -2041,12 +2066,12 @@
 
 
   <xsl:template match="url">
-    <span class="bold_code"><a href="{@href}"><xsl:apply-templates/></a></span>
+    <span class="bold_code"><b><a href="{@href}"><xsl:apply-templates/></a></b></span>
   </xsl:template>
 
 
   <xsl:template match="marker">
-    <a name="{@id}"><xsl:apply-templates/></a>
+    <a class="no-link-display" name="{@id}"><xsl:apply-templates/></a>
   </xsl:template>
 
   <xsl:template match="term">
@@ -2098,7 +2123,7 @@
   <xsl:template name="menu.rn">
     <xsl:param name="chapnum"/>
 
-    <div id="leftnav">
+    <div id="leftnav" class="col-lg-3">
       <div class="innertube">
 
         <xsl:call-template name="menu_top"/>
@@ -2133,19 +2158,18 @@
     <xsl:document href="{$outdir}/{$type}_glossary.html" method="html"  encoding="UTF-8" indent="yes" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN">
     <html>
       <head>
-        <link rel="stylesheet" href="{$topdocdir}/otp_doc.css" type="text/css"/>
+	<link rel="stylesheet" href="{$topdocdir}/bootstrap.css" type="text/css"/>
         <title>Erlang Documentation -- <xsl:value-of select="header/title"/></title>
       </head>
       <body bgcolor="white" text="#000000" link="#0000ff" vlink="#ff00ff" alink="#ff0000">
 
-        <div id="container">
+        <div class="container">
           <script id="js" type="text/javascript" language="JavaScript" src="{$topdocdir}/js/flipmenu/flipmenu.js"/>
           <script id="js2" type="text/javascript" src="{$topdocdir}/js/erlresolvelinks.js"></script>
-
           <!-- Generate menu -->
           <xsl:call-template name="menu"/>
 
-          <div id="content">
+          <div id="content" class="col-lg-9">
             <div class="innertube">
               <h1>Glossary</h1>
             </div>
@@ -2154,7 +2178,7 @@
               <xsl:for-each select="descendant::term">
                 <xsl:sort select="@id"/>
                 <xsl:if test="boolean(termdef)">
-                    <dt><a name="{@id}"><strong><xsl:value-of select="@id"/></strong></a></dt>
+                    <dt><a class="no-link-display" name="{@id}"><strong><xsl:value-of select="@id"/></strong></a></dt>
                     <dd><xsl:value-of select="termdef"/></dd>
                 </xsl:if>
               </xsl:for-each>
@@ -2188,19 +2212,18 @@
     <xsl:document href="{$outdir}/{$type}_bibliography.html" method="html"  encoding="UTF-8" indent="yes" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN">
     <html>
       <head>
-        <link rel="stylesheet" href="{$topdocdir}/otp_doc.css" type="text/css"/>
+	<link rel="stylesheet" href="{$topdocdir}/bootstrap.css" type="text/css"/>
         <title>Erlang Documentation -- <xsl:value-of select="header/title"/></title>
       </head>
       <body bgcolor="white" text="#000000" link="#0000ff" vlink="#ff00ff" alink="#ff0000">
 
-        <div id="container">
+        <div class="container">
           <script id="js" type="text/javascript" language="JavaScript" src="{$topdocdir}/js/flipmenu/flipmenu.js"/>
           <script id="js2" type="text/javascript" src="{$topdocdir}/js/erlresolvelinks.js"></script>
-
           <!-- Generate menu -->
           <xsl:call-template name="menu"/>
 
-          <div id="content">
+          <div id="content" class="col-lg-9">
             <div class="innertube">
               <h1>Bibliography</h1>
             </div>
