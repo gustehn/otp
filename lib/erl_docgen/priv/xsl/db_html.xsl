@@ -313,11 +313,11 @@
   <xsl:template match="all_etypes">
     <xsl:for-each select= "$i//type">
       <pre>
-	<span class="bold_code">
+	<code class="erlang_repl">
 	  <b>
 	    <xsl:apply-templates select="typedecl"/>
 	  </b>
-	  </span><xsl:text>
+	  </code><xsl:text>
 	</xsl:text>
       </pre>
     </xsl:for-each>
@@ -742,36 +742,52 @@
 
 
   <xsl:template name="menu_top">
-    <xsl:choose>
-      <xsl:when test="string-length($logo) > 0">
-        <img alt="Erlang logo" src="{$topdocdir}/{$logo}"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <img alt="Erlang logo" src="{$topdocdir}/erlang-logo.png"/>
-      </xsl:otherwise>
-    </xsl:choose>
-    <br />
-    <br />
-    <small>
-      <xsl:if test="boolean(/book/parts/part)">
-	<a href="users_guide.html">User's Guide</a><br/>
-      </xsl:if>
-      <xsl:if test="boolean(/book/applications)">
-	<a href="index.html">Reference Manual</a><br/>
-      </xsl:if>
-      <xsl:if test="boolean(/book/releasenotes)">
-	<a href="release_notes.html">Release Notes</a><br/>
-      </xsl:if>
-      <xsl:choose>
-	<xsl:when test="string-length($pdfname) > 0">
-	  <a href="{$pdfdir}/{$pdfname}.pdf">PDF</a><br/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <a href="{$pdfdir}/{$appname}-{$appver}.pdf">PDF</a><br/>
-	</xsl:otherwise>
-      </xsl:choose>
-      <a href="{$topdocdir}/index.html">Top</a>
-    </small>
+    <div class="col-lg-12">
+      <div class="col-lg-2">
+	<xsl:choose>
+	  <xsl:when test="string-length($logo) > 0">
+	    <img alt="Erlang logo" src="{$topdocdir}/{$logo}"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <a href="{$topdocdir}/index.html"><img alt="Erlang logo" width="60" src="{$topdocdir}/erlang-logo.png" /></a>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </div>
+      <div class="col-lg-10" style="padding:40px;">
+	<ul class="nav nav-pills">
+	  <xsl:if test="boolean(/book/parts/part)">
+	    <li>
+	      <a href="users_guide.html">User's Guide</a>
+	    </li>
+	  </xsl:if>
+	  <xsl:if test="boolean(/book/applications)">
+	    <li>
+	      <a href="index.html">Reference Manual</a>
+	    </li>
+	  </xsl:if>
+	  <xsl:if test="boolean(/book/releasenotes)">
+	    <li>
+	      <a href="release_notes.html">Release Notes</a>
+	    </li>
+	  </xsl:if>
+	  <xsl:choose>
+	    <xsl:when test="string-length($pdfname) > 0">
+	      <li>
+		<a href="{$pdfdir}/{$pdfname}.pdf">PDF</a>
+	      </li>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <li>
+		<a href="{$pdfdir}/{$appname}-{$appver}.pdf">PDF</a>
+	      </li>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</ul>
+      </div>
+    </div>
+    <div class="col-lg-12">
+      <div class="divider"><p></p></div>
+    </div>
   </xsl:template>
 
   <xsl:template name="menu_middle">
@@ -787,8 +803,6 @@
         </xsl:when>
       </xsl:choose>
     </small -->
-    <br/>
-
     <a href="javascript:openAllFlips()">Expand All</a><br/>
     <a href="javascript:closeAllFlips()">Contract All</a>
   </xsl:template>
@@ -834,6 +848,7 @@
         <xsl:value-of select="title"/>
       </a>
     </h3>
+    <div class="divider"><p></p></div>
     <xsl:apply-templates>
       <xsl:with-param name="chapnum" select="$chapnum"/>
       <xsl:with-param name="sectnum"><xsl:number/></xsl:with-param>
@@ -861,10 +876,11 @@
         <xsl:value-of select="title"/>
       </a>
     </h3>
+    <div class="divider"><p></p></div>
     <div class="REFBODY">
-    <xsl:apply-templates>
-      <xsl:with-param name="chapnum" select="$chapnum"/>
-    </xsl:apply-templates>
+      <xsl:apply-templates>
+	<xsl:with-param name="chapnum" select="$chapnum"/>
+      </xsl:apply-templates>
     </div>
   </xsl:template>
 
@@ -876,9 +892,9 @@
       <xsl:value-of select="title"/>
     </h4>
     <div class="REFBODY">
-    <xsl:apply-templates>
-      <xsl:with-param name="chapnum" select="$chapnum"/>
-    </xsl:apply-templates>
+      <xsl:apply-templates>
+	<xsl:with-param name="chapnum" select="$chapnum"/>
+      </xsl:apply-templates>
     </div>
   </xsl:template>
 
@@ -935,30 +951,26 @@
   <!-- Note -->
   <xsl:template match="note">
     <xsl:param name="chapnum"/>
-    <div class="note">
-      <div class="label">Note</div>
-      <div class="content">
-        <p>
-          <xsl:apply-templates>
-            <xsl:with-param name="chapnum" select="$chapnum"/>
-          </xsl:apply-templates>
-        </p>
-      </div>
+    <div class="panel panel-primary">
+      <div class="panel-heading">Note</div>
+      <p>
+	<xsl:apply-templates>
+	  <xsl:with-param name="chapnum" select="$chapnum"/>
+	</xsl:apply-templates>
+      </p>
     </div>
   </xsl:template>
 
   <!-- Warning -->
   <xsl:template match="warning">
     <xsl:param name="chapnum"/>
-    <div class="warning">
-      <div class="label">Warning</div>
-      <div class="content">
-        <p>
-          <xsl:apply-templates>
-            <xsl:with-param name="chapnum" select="$chapnum"/>
-          </xsl:apply-templates>
-        </p>
-      </div>
+    <div class="panel panel-danger">
+      <div class="panel-heading">Warning</div>
+      <p>
+	<xsl:apply-templates>
+	  <xsl:with-param name="chapnum" select="$chapnum"/>
+	</xsl:apply-templates>
+      </p>
     </div>
   </xsl:template>
 
@@ -980,7 +992,7 @@
   </xsl:template>
 
   <xsl:template match="c">
-    <span class="code"><xsl:apply-templates/></span>
+    <code class="code"><xsl:apply-templates/></code>
   </xsl:template>
 
   <xsl:template match="em">
@@ -993,7 +1005,7 @@
     <xsl:variable name="codenum">
       <xsl:number level="any" from="chapter" count="code"/>
     </xsl:variable>
-    <div class="example"><pre><xsl:apply-templates/></pre></div>
+    <pre><code class="erlang_repl"><xsl:apply-templates/></code></pre>
   </xsl:template>
 
   <!-- Pre -->
@@ -1002,7 +1014,7 @@
     <xsl:variable name="codenum">
       <xsl:number level="any" from="chapter" count="code"/>
     </xsl:variable>
-    <div class="example"><pre><xsl:apply-templates/></pre></div>
+    <pre><code class="erlang_repl"><xsl:apply-templates/></code></pre>
   </xsl:template>
 
 
@@ -1120,13 +1132,10 @@
   <!-- Menu.ug -->
   <xsl:template name="menu.ug">
     <xsl:param name="chapnum"/>
-
+    <xsl:call-template name="menu_top"/>
     <div id="leftnav" class="col-lg-3">
-      <div class="innertube">
-
-        <xsl:call-template name="menu_top"/>
-
-        <p>
+      <div class="innertube-navs">
+	<p>
           <strong><xsl:value-of select="/book/header/title"/></strong><br/>
           <strong>User's Guide</strong><br/>
           <small>Version <xsl:value-of select="$appver"/></small>
@@ -1232,9 +1241,11 @@
     <xsl:param name="chapnum"/>
 
     <!-- center-->
+    <center>
       <h1>
         <xsl:value-of select="$chapnum"/>&#160;<xsl:value-of select="header/title"/>
       </h1>
+    </center>
     <!-- /center-->
 
     <xsl:apply-templates>
@@ -1285,12 +1296,10 @@
   <!-- Menu.ref -->
   <xsl:template name="menu.ref">
     <xsl:param name="curModule"/>
+    <xsl:call-template name="menu_top"/>
     <div id="leftnav" class="col-lg-3">
-      <div class="innertube">
-
-        <xsl:call-template name="menu_top"/>
-
-        <p>
+      <div class="innertube-navs">
+	<p>
           <strong><xsl:value-of select="/book/header/title"/></strong><br/>
           <strong>Reference Manual</strong><br/>
           <small>Version <xsl:value-of select="$appver"/></small>
@@ -2122,12 +2131,9 @@
   <!-- Menu.rn -->
   <xsl:template name="menu.rn">
     <xsl:param name="chapnum"/>
-
+    <xsl:call-template name="menu_top"/>
     <div id="leftnav" class="col-lg-3">
       <div class="innertube">
-
-        <xsl:call-template name="menu_top"/>
-
         <p>
           <strong><xsl:value-of select="/book/header/title"/></strong><br/>
           <strong>Release Notes</strong><br/>
