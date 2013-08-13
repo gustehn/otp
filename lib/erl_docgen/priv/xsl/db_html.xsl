@@ -116,7 +116,7 @@
 	    <!-- Avoid duplicated anchors. See also menu.funcs. -->
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <a class="no-link-display" name="{$name}-{$arity}"></a>
+	    <a href="#{$name}-{$arity}" class="no-link-display" name="{$name}-{$arity}"></a>
 	  </xsl:otherwise>
         </xsl:choose>
 
@@ -746,14 +746,14 @@
       <div class="col-lg-2">
 	<xsl:choose>
 	  <xsl:when test="string-length($logo) > 0">
-	    <img alt="Erlang logo" src="{$topdocdir}/{$logo}"/>
+	    <a href="{$topdocdir}/index.html"><img width="60" alt="Erlang logo" src="{$topdocdir}/{$logo}"/></a>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <a href="{$topdocdir}/index.html"><img alt="Erlang logo" width="60" src="{$topdocdir}/erlang-logo.png" /></a>
 	  </xsl:otherwise>
 	</xsl:choose>
       </div>
-      <div class="col-lg-10" style="padding:40px;">
+      <div class="col-lg-10" style="padding:2px;">
 	<ul class="nav nav-pills">
 	  <xsl:if test="boolean(/book/parts/part)">
 	    <li>
@@ -843,7 +843,7 @@
   <xsl:template match="chapter/section">
     <xsl:param name="chapnum"/>
     <h3>
-      <a class="no-link-display" name="{generate-id(title)}">
+      <a class="no-link-display" href="#{generate-id(title)}" name="{generate-id(title)}">
         <xsl:value-of select="$chapnum"/>.<xsl:number/>&#160;
         <xsl:value-of select="title"/>
       </a>
@@ -872,7 +872,7 @@
   <xsl:template match="erlref/section|cref/section|comref/section|fileref/section|appref/section">
     <xsl:param name="chapnum"/>
     <h3>
-      <a class="no-link-display" name="{generate-id(title)}">
+      <a class="no-link-display" href="#{generate-id(title)}" name="{generate-id(title)}">
         <xsl:value-of select="title"/>
       </a>
     </h3>
@@ -1875,7 +1875,7 @@
 
     <xsl:choose>
       <xsl:when test="ancestor::cref">
-        <a class="no-link-display" name="{substring-before(nametext, '(')}">
+        <a class="no-link-display" href="#{substring-before(nametext, '(')}" name="{substring-before(nametext, '(')}">
           <span class="bold_code">
 	    <b>
             <xsl:value-of select="ret"/>
@@ -1903,7 +1903,7 @@
             </xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
-        <a class="no-link-display" name="{$fname}-{$arity}"><span class="bold_code"><b><xsl:value-of select="."/></b></span></a><br/>
+        <a class="no-link-display" href="#{$fname}-{$arity}" name="{$fname}-{$arity}"><span class="bold_code"><b><xsl:value-of select="."/></b></span></a><br/>
       </xsl:when>
       <xsl:otherwise>
         <span class="bold_code"><b><xsl:value-of select="."/></b></span>
@@ -2080,7 +2080,7 @@
 
 
   <xsl:template match="marker">
-    <a class="no-link-display" name="{@id}"><xsl:apply-templates/></a>
+    <a class="no-link-display" href="#{@id}" name="{@id}"><xsl:apply-templates/></a>
   </xsl:template>
 
   <xsl:template match="term">
@@ -2184,7 +2184,7 @@
               <xsl:for-each select="descendant::term">
                 <xsl:sort select="@id"/>
                 <xsl:if test="boolean(termdef)">
-                    <dt><a class="no-link-display" name="{@id}"><strong><xsl:value-of select="@id"/></strong></a></dt>
+                    <dt><a class="no-link-display" href="#{@id}" name="{@id}"><strong><xsl:value-of select="@id"/></strong></a></dt>
                     <dd><xsl:value-of select="termdef"/></dd>
                 </xsl:if>
               </xsl:for-each>

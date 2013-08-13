@@ -32,9 +32,9 @@
     <div id="container" class="container">
     <div class="col-lg-12">
       <div class="col-lg-2">
-	<img alt="Erlang logo" src="erlang-logo.png" />
+	<img alt="Erlang logo" width="60" src="erlang-logo.png" />
       </div>
-      <div class="col-lg-10" style="padding:30px;">
+      <div class="col-lg-10" style="padding:2px;">
 	<ul class="nav nav-pills">
 	<li><a href="applications.html">Applications</a></li>
 	<li><a href="man_index.html">Modules</a></li>
