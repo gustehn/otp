@@ -1120,7 +1120,7 @@
   <xsl:template name="part.content">
     <div class="frontpage"/>
 
-    <center><h1><xsl:value-of select="/book/header/title"/> User's Guide</h1></center>
+    <center><h2><xsl:value-of select="/book/header/title"/> User's Guide</h2></center>
 
     <center><h4>Version <xsl:value-of select="$appver"/></h4></center>
     <center><h4><xsl:value-of select="$gendate"/></h4></center>
@@ -1242,9 +1242,9 @@
 
     <!-- center-->
     <center>
-      <h1>
+      <h2>
         <xsl:value-of select="$chapnum"/>&#160;<xsl:value-of select="header/title"/>
-      </h1>
+      </h2>
     </center>
     <!-- /center-->
 
@@ -1284,7 +1284,7 @@
   <xsl:template name="app.content">
     <div class="frontpage"/>
 
-    <center><h1><xsl:value-of select="/book/header/title"/> Reference Manual</h1></center>
+    <center><h2><xsl:value-of select="/book/header/title"/> Reference Manual</h2></center>
 
     <center><h4>Version <xsl:value-of select="$appver"/></h4></center>
     <center><h4><xsl:value-of select="$gendate"/></h4></center>
@@ -1628,7 +1628,7 @@
     <xsl:param name="partnum"/>
 
     <center>
-      <h1>
+      <h2>
         <xsl:choose>
           <xsl:when test="local-name() = 'erlref'">
             <xsl:value-of select="module"/>
@@ -1646,7 +1646,7 @@
             <xsl:value-of select="app"/>
           </xsl:when>
         </xsl:choose>
-      </h1>
+      </h2>
     </center>
 
     <xsl:apply-templates>
@@ -2119,7 +2119,7 @@
   <xsl:template name="releasenotes.content">
     <div class="frontpage"/>
 
-    <center><h1><xsl:value-of select="/book/header/title"/> Release Notes</h1></center>
+    <center><h2><xsl:value-of select="/book/header/title"/> Release Notes</h2></center>
 
     <center><h4>Version <xsl:value-of select="$appver"/></h4></center>
     <center><h4><xsl:value-of select="$gendate"/></h4></center>
@@ -2177,7 +2177,7 @@
 
           <div id="content" class="col-lg-9">
             <div class="innertube">
-              <h1>Glossary</h1>
+              <h2>Glossary</h2>
             </div>
 
             <dl>
@@ -2231,7 +2231,7 @@
 
           <div id="content" class="col-lg-9">
             <div class="innertube">
-              <h1>Bibliography</h1>
+              <h2>Bibliography</h2>
             </div>
 
             <table>
