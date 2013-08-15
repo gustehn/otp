@@ -613,6 +613,7 @@
 
         <div class="container">
           <script id="js" type="text/javascript" language="JavaScript" src="{$topdocdir}/js/flipmenu/flipmenu.js"/>
+	  <script id="js" type="text/javascript" language="JavaScript" src="{$topdocdir}/js/flipmenu/jquery-latest.js"/>
           <script id="js2" type="text/javascript" src="{$topdocdir}/js/erlresolvelinks.js"></script>
           <script language="JavaScript" type="text/javascript">
             <xsl:text disable-output-escaping="yes"><![CDATA[
@@ -2171,6 +2172,7 @@
 
         <div class="container">
           <script id="js" type="text/javascript" language="JavaScript" src="{$topdocdir}/js/flipmenu/flipmenu.js"/>
+	  <script id="js" type="text/javascript" language="JavaScript" src="{$topdocdir}/js/flipmenu/jquery-latest.js"/>
           <script id="js2" type="text/javascript" src="{$topdocdir}/js/erlresolvelinks.js"></script>
           <!-- Generate menu -->
           <xsl:call-template name="menu"/>
@@ -2225,6 +2227,7 @@
 
         <div class="container">
           <script id="js" type="text/javascript" language="JavaScript" src="{$topdocdir}/js/flipmenu/flipmenu.js"/>
+	  <script id="js" type="text/javascript" language="JavaScript" src="{$topdocdir}/js/flipmenu/jquery-latest.js"/>
           <script id="js2" type="text/javascript" src="{$topdocdir}/js/erlresolvelinks.js"></script>
           <!-- Generate menu -->
           <xsl:call-template name="menu"/>
