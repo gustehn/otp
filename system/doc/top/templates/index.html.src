@@ -22,7 +22,7 @@
   <head>
     <link rel="stylesheet" href="bootstrap.css" type="text/css"/>
     <title>Erlang/OTP #release#</title>
-
+    <script type="text/javascript" language="JavaScript" src="js/flipmenu/jquery-latest.js"></script>
     <script id="js" type="text/javascript" language="JavaScript" src="js/flipmenu/flipmenu.js">
     </script>
   </head> 

@@ -612,8 +612,8 @@
       <body bgcolor="white" text="#000000" link="#0000ff" vlink="#ff00ff" alink="#ff0000">
 
         <div class="container">
+	  <script type="text/javascript" language="JavaScript" src="{$topdocdir}/js/flipmenu/jquery-latest.js"/>
           <script id="js" type="text/javascript" language="JavaScript" src="{$topdocdir}/js/flipmenu/flipmenu.js"/>
-	  <script id="js" type="text/javascript" language="JavaScript" src="{$topdocdir}/js/flipmenu/jquery-latest.js"/>
           <script id="js2" type="text/javascript" src="{$topdocdir}/js/erlresolvelinks.js"></script>
           <script language="JavaScript" type="text/javascript">
             <xsl:text disable-output-escaping="yes"><![CDATA[
@@ -2171,8 +2171,8 @@
       <body bgcolor="white" text="#000000" link="#0000ff" vlink="#ff00ff" alink="#ff0000">
 
         <div class="container">
+	  <script type="text/javascript" language="JavaScript" src="{$topdocdir}/js/flipmenu/jquery-latest.js"/>
           <script id="js" type="text/javascript" language="JavaScript" src="{$topdocdir}/js/flipmenu/flipmenu.js"/>
-	  <script id="js" type="text/javascript" language="JavaScript" src="{$topdocdir}/js/flipmenu/jquery-latest.js"/>
           <script id="js2" type="text/javascript" src="{$topdocdir}/js/erlresolvelinks.js"></script>
           <!-- Generate menu -->
           <xsl:call-template name="menu"/>
@@ -2226,8 +2226,8 @@
       <body bgcolor="white" text="#000000" link="#0000ff" vlink="#ff00ff" alink="#ff0000">
 
         <div class="container">
+	  <script type="text/javascript" language="JavaScript" src="{$topdocdir}/js/flipmenu/jquery-latest.js"/>
           <script id="js" type="text/javascript" language="JavaScript" src="{$topdocdir}/js/flipmenu/flipmenu.js"/>
-	  <script id="js" type="text/javascript" language="JavaScript" src="{$topdocdir}/js/flipmenu/jquery-latest.js"/>
           <script id="js2" type="text/javascript" src="{$topdocdir}/js/erlresolvelinks.js"></script>
           <!-- Generate menu -->
           <xsl:call-template name="menu"/>

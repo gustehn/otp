@@ -701,7 +701,7 @@ pre.prettyprint {
 pre code {
   padding: 0;
   color: inherit;
-  white-space: pre-wrap;
+  white-space: pre-line;
   background-color: transparent;
   border: 0;
 }
